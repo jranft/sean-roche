@@ -5,27 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Land Use Committee — Sean Roche, Councilor-at-Large</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1a1a;
-    --ink-muted: #5a5a5a;
-    --ink-light: #8a8a8a;
-    --surface: #f8f6f2;
-    --surface-warm: #f0ece4;
+    --ink: #1e3657;
+    --ink-muted: #4a5d73;
+    --ink-light: #7a8da0;
+    --surface: #f5f5f5;
+    --surface-warm: #eceef0;
     --surface-card: #ffffff;
-    --accent: #2d5f3a;
-    --accent-light: #e8f0ea;
-    --accent-hover: #3a7a4d;
-    --amber: #b8860b;
-    --amber-light: #fdf6e3;
-    --red-muted: #9b4d4d;
-    --red-light: #fdf0f0;
-    --border: #e0dcd4;
-    --border-light: #eae6de;
+    --accent: #477d9e;
+    --accent-light: #e4eff5;
+    --accent-hover: #3a6b89;
+    --coral: #f46270;
+    --coral-light: #fde8ea;
+    --amber: #477d9e;
+    --amber-light: #e4eff5;
+    --red-muted: #f46270;
+    --red-light: #fde8ea;
+    --border: #d8dde2;
+    --border-light: #e8ebee;
     --radius: 6px;
-    --font-display: 'Fraunces', Georgia, serif;
-    --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    --font-display: 'Manrope', -apple-system, sans-serif;
+    --font-body: 'Poppins', -apple-system, sans-serif;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -193,7 +195,7 @@
     white-space: nowrap;
   }
   .type-committee { background: var(--accent-light); color: var(--accent); }
-  .type-council { background: var(--amber-light); color: var(--amber); }
+  .type-council { background: var(--coral-light); color: var(--coral); }
 
   .meeting-links {
     display: flex;
@@ -214,7 +216,7 @@
     border-radius: 4px;
     transition: background 0.2s;
   }
-  .meeting-link:hover { background: #d4e6d8; }
+  .meeting-link:hover { background: #d0e3ee; }
   .meeting-link svg { width: 14px; height: 14px; }
 
   .meeting-items { margin-top: 0.75rem; }
@@ -252,7 +254,7 @@
     border-radius: 3px;
   }
   .result-passed { background: var(--accent-light); color: var(--accent); }
-  .result-held { background: var(--amber-light); color: var(--amber); }
+  .result-held { background: var(--coral-light); color: var(--coral); }
   .result-hearing { background: #f0eaff; color: #6b4fa0; }
 
   .item-arrow {
@@ -287,7 +289,7 @@
   }
   .member-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
   .member-card.chair { border-left: 3px solid var(--accent); }
-  .member-card.vice-chair { border-left: 3px solid var(--amber); }
+  .member-card.vice-chair { border-left: 3px solid var(--coral); }
   .member-role {
     font-size: 0.7rem;
     font-weight: 600;
@@ -296,7 +298,7 @@
     margin-bottom: 0.35rem;
   }
   .role-chair { color: var(--accent); }
-  .role-vice { color: var(--amber); }
+  .role-vice { color: var(--coral); }
   .role-member { color: var(--ink-light); }
   .member-name {
     font-family: var(--font-display);
@@ -388,7 +390,7 @@
     letter-spacing: 0.04em;
     flex-shrink: 0;
   }
-  .status-open { background: var(--amber-light); color: var(--amber); }
+  .status-open { background: var(--coral-light); color: var(--coral); }
   .status-closed { background: var(--accent-light); color: var(--accent); }
 
   .docket-chevron {
@@ -498,9 +500,9 @@
 
   /* ---- HIGHLIGHT FLASH ---- */
   @keyframes highlightPulse {
-    0% { box-shadow: 0 0 0 0 rgba(45,95,58,0.25); }
-    50% { box-shadow: 0 0 0 6px rgba(45,95,58,0.1); }
-    100% { box-shadow: 0 0 0 0 rgba(45,95,58,0); }
+    0% { box-shadow: 0 0 0 0 rgba(71,125,158,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(71,125,158,0.12); }
+    100% { box-shadow: 0 0 0 0 rgba(71,125,158,0); }
   }
   .docket-item.highlight {
     animation: highlightPulse 0.8s ease-out;
