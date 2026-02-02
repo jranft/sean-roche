@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land Use Committee — Sean Roche, Councilor-at-Large</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-muted: #5a5a5a;
+    --ink-light: #8a8a8a;
+    --surface: #f8f6f2;
+    --surface-warm: #f0ece4;
+    --surface-card: #ffffff;
+    --accent: #2d5f3a;
+    --accent-light: #e8f0ea;
+    --accent-hover: #3a7a4d;
+    --amber: #b8860b;
+    --amber-light: #fdf6e3;
+    --red-muted: #9b4d4d;
+    --red-light: #fdf0f0;
+    --border: #e0dcd4;
+    --border-light: #eae6de;
+    --radius: 6px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Source Sans 3', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- NAV ---- */
+  .site-nav {
+    background: var(--ink);
+    color: #fff;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-nav .logo {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    opacity: 0.95;
+  }
+  .site-nav .logo span { font-weight: 300; opacity: 0.6; margin-left: 0.5rem; }
+  .nav-links { display: flex; gap: 1.75rem; font-size: 0.85rem; font-weight: 400; }
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: #fff; font-weight: 600; }
+
+  /* ---- PAGE HEADER ---- */
+  .page-header {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem 2rem;
+  }
+  .breadcrumb {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .page-subtitle {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    margin-top: 0.75rem;
+    max-width: 600px;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  /* ---- SECTION TABS ---- */
+  .section-nav {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 56px;
+    background: var(--surface);
+    z-index: 50;
+  }
+  .section-tab {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: var(--font-body);
+    letter-spacing: 0.01em;
+  }
+  .section-tab:hover { color: var(--ink); }
+  .section-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ---- MAIN CONTENT ---- */
+  .main-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ---- MEETINGS ---- */
+  .meeting-group-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .meeting-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+  }
+  .meeting-card:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .meeting-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .meeting-date {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .meeting-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .type-committee { background: var(--accent-light); color: var(--accent); }
+  .type-council { background: var(--amber-light); color: var(--amber); }
+
+  .meeting-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .meeting-link {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
+    background: var(--accent-light);
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .meeting-link:hover { background: #d4e6d8; }
+  .meeting-link svg { width: 14px; height: 14px; }
+
+  .meeting-items { margin-top: 0.75rem; }
+  .meeting-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    margin: 0 -0.75rem;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .meeting-item:hover {
+    background: var(--surface);
+  }
+  .petition-num {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-family: var(--font-body);
+  }
+  .item-detail { color: var(--ink-muted); flex: 1; }
+  .item-result {
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+  .result-passed { background: var(--accent-light); color: var(--accent); }
+  .result-held { background: var(--amber-light); color: var(--amber); }
+  .result-hearing { background: #f0eaff; color: #6b4fa0; }
+
+  .item-arrow {
+    color: var(--ink-light);
+    font-size: 0.85rem;
+    transition: transform 0.15s;
+    flex-shrink: 0;
+  }
+  .meeting-item:hover .item-arrow { transform: translateX(2px); color: var(--accent); }
+
+  .meeting-attendance {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .meetings-spacer { height: 2rem; }
+
+  /* ---- MEMBERS ---- */
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .member-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: box-shadow 0.2s;
+  }
+  .member-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .member-card.chair { border-left: 3px solid var(--accent); }
+  .member-card.vice-chair { border-left: 3px solid var(--amber); }
+  .member-role {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+  }
+  .role-chair { color: var(--accent); }
+  .role-vice { color: var(--amber); }
+  .role-member { color: var(--ink-light); }
+  .member-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .member-ward {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    margin-top: 0.15rem;
+  }
+
+  /* ---- PURPOSE ---- */
+  .purpose-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+  .purpose-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .purpose-card p {
+    color: var(--ink-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+
+  /* ---- DOCKET ---- */
+  .docket-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .docket-section-label:first-child { margin-top: 0; }
+
+  .docket-item {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .docket-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .docket-item.expanded { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+  .docket-item-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .docket-item-header:hover { background: #fdfcfa; }
+
+  .docket-address {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+  .docket-desc {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    flex: 1.5;
+  }
+  .status-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .status-open { background: var(--amber-light); color: var(--amber); }
+  .status-closed { background: var(--accent-light); color: var(--accent); }
+
+  .docket-chevron {
+    color: var(--ink-light);
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .docket-item.expanded .docket-chevron { transform: rotate(180deg); }
+
+  .docket-detail {
+    display: none;
+    border-top: 1px solid var(--border-light);
+    padding: 1.25rem;
+    background: var(--surface);
+  }
+  .docket-item.expanded .docket-detail { display: block; }
+
+  .docket-detail-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    margin-bottom: 0.65rem;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+  .timeline-entry {
+    position: relative;
+    padding-bottom: 1rem;
+    padding-left: 0.5rem;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .timeline-entry:last-child { padding-bottom: 0; }
+  .timeline-entry::before {
+    content: '';
+    position: absolute;
+    left: -1.25rem;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    background: var(--surface-card);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .timeline-entry:hover::before {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .timeline-entry:hover { color: var(--accent); }
+
+  .timeline-date {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+  .timeline-entry:hover .timeline-date { color: var(--accent); }
+  .timeline-meeting-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-left: 0.5rem;
+  }
+  .timeline-action {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    margin-top: 0.15rem;
+  }
+  .timeline-entry:hover .timeline-action { color: var(--accent); }
+
+  /* ---- FOOTER ---- */
+  .site-footer {
+    max-width: 960px;
+    margin: 3rem auto 0;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    color: var(--ink-muted);
+    font-size: 0.85rem;
+    padding-bottom: 3rem;
+  }
+  .footer-contact a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .footer-contact p { margin-top: 0.25rem; }
+
+  /* ---- HIGHLIGHT FLASH ---- */
+  @keyframes highlightPulse {
+    0% { box-shadow: 0 0 0 0 rgba(45,95,58,0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(45,95,58,0.1); }
+    100% { box-shadow: 0 0 0 0 rgba(45,95,58,0); }
+  }
+  .docket-item.highlight {
+    animation: highlightPulse 0.8s ease-out;
+    border-color: var(--accent);
+  }
+  .meeting-card.highlight {
+    animation: highlightPulse 0.8s ease-out;
+    border-color: var(--accent);
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section.active > * {
+    animation: fadeUp 0.35s ease-out both;
+  }
+  .section.active > *:nth-child(2) { animation-delay: 0.05s; }
+  .section.active > *:nth-child(3) { animation-delay: 0.1s; }
+  .section.active > *:nth-child(4) { animation-delay: 0.15s; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 680px) {
+    .page-title { font-size: 1.8rem; }
+    .section-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .section-tab { white-space: nowrap; }
+    .meeting-header { flex-direction: column; gap: 0.5rem; }
+    .members-grid { grid-template-columns: 1fr; }
+    .site-footer { flex-direction: column; }
+    .nav-links { display: none; }
+    .docket-item-header { flex-wrap: wrap; }
+    .docket-desc { flex-basis: 100%; order: 4; margin-top: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="logo">Sean Roche <span>Councilor-at-Large</span></div>
+  <div class="nav-links">
+    <a href="#" class="active">Committees</a>
+    <a href="#">Issues</a>
+    <a href="#">Get Involved</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="breadcrumb"><a href="#">Committees</a> / Land Use</div>
+  <h1 class="page-title">Land Use Committee</h1>
+  <p class="page-subtitle">Reviewing special permits, site plans, zone changes, and development petitions for the City of Newton.</p>
+</header>
+
+<!-- SECTION TABS -->
+<div class="section-nav">
+  <button class="section-tab active" data-section="meetings">Meetings</button>
+  <button class="section-tab" data-section="docket">Docket</button>
+  <button class="section-tab" data-section="members">Members</button>
+  <button class="section-tab" data-section="purpose">Purpose</button>
+</div>
+
+<!-- CONTENT -->
+<main class="main-content">
+
+  <!-- MEETINGS -->
+  <div class="section active" id="meetings">
+    <p class="meeting-group-label">Upcoming</p>
+
+    <div class="meeting-card" data-meeting="2026-01-27">
+      <div class="meeting-header">
+        <div class="meeting-date">January 27, 2026</div>
+        <span class="meeting-type type-committee">Committee</span>
+      </div>
+      <div class="meeting-links">
+        <a href="https://newtonma-gov.zoom.us/j/89541924904" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Zoom
+        </a>
+        <a href="https://www.newtonma.gov/home/showpublisheddocument/135471" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Agenda
+        </a>
+      </div>
+      <div class="meeting-items">
+        <div class="meeting-item" data-petition="15-26" onclick="navigateToDocket('15-26')">
+          <span class="petition-num">#15-26</span>
+          <span class="item-detail">355 Walnut St. — FAR and setback relief</span>
+          <span class="item-result result-hearing">Public Hearing</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+        <div class="meeting-item" data-petition="58-26" onclick="navigateToDocket('58-26')">
+          <span class="petition-num">#58-26</span>
+          <span class="item-detail">1135 Walnut St. — Parking waiver (withdrawal requested)</span>
+          <span class="item-result result-hearing">Public Hearing</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meetings-spacer"></div>
+    <p class="meeting-group-label">Past</p>
+
+    <div class="meeting-card" data-meeting="2026-01-20">
+      <div class="meeting-header">
+        <div class="meeting-date">January 20, 2026</div>
+        <span class="meeting-type type-council">City Council</span>
+      </div>
+      <div class="meeting-links">
+        <a href="https://www.newtonma.gov/home/showpublisheddocument/135279" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Reports Docket
+        </a>
+        <a href="https://www.newtonma.gov/home/showpublisheddocument/135277" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Council Docket
+        </a>
+      </div>
+      <div class="meeting-items">
+        <div class="meeting-item" data-petition="13-26" onclick="navigateToDocket('13-26')">
+          <span class="petition-num">#13-26</span>
+          <span class="item-detail">14 Elliot St. — Reported from committee</span>
+          <span class="item-result result-passed">Passed 24-0</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+        <div class="meeting-item" data-petition="15-26" onclick="navigateToDocket('15-26')">
+          <span class="petition-num">#15-26</span>
+          <span class="item-detail">355 Walnut St. — Reported from committee</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+        <div class="meeting-item" data-petition="58-26" onclick="navigateToDocket('58-26')">
+          <span class="petition-num">#58-26</span>
+          <span class="item-detail">1135 Walnut St. — Referred, public hearing set for 1/27</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meeting-card" data-meeting="2026-01-06">
+      <div class="meeting-header">
+        <div class="meeting-date">January 6, 2026</div>
+        <span class="meeting-type type-committee">Committee</span>
+      </div>
+      <p class="meeting-attendance">All members present</p>
+      <div class="meeting-links">
+        <a href="https://www.youtube.com/live/stBkAA_M4qo?si=7LzgT7OQ_0Z4nJZy" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video
+        </a>
+        <a href="https://www.newtonma.gov/home/showpublisheddocument/134947/639029471448322990" class="meeting-link" target="_blank" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Agenda
+        </a>
+      </div>
+      <div class="meeting-items">
+        <div class="meeting-item" data-petition="13-26" onclick="navigateToDocket('13-26')">
+          <span class="petition-num">#13-26</span>
+          <span class="item-detail">14 Elliot St.</span>
+          <span class="item-result result-passed">Passed 8-0</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+        <div class="meeting-item" data-petition="15-26" onclick="navigateToDocket('15-26')">
+          <span class="petition-num">#15-26</span>
+          <span class="item-detail">355 Walnut St.</span>
+          <span class="item-result result-held">Held</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+        <div class="meeting-item" data-petition="16-26" onclick="navigateToDocket('16-26')">
+          <span class="petition-num">#16-26</span>
+          <span class="item-detail">89 Redwood Rd.</span>
+          <span class="item-result result-held">Held</span>
+          <span class="item-arrow">&rsaquo;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOCKET -->
+  <div class="section" id="docket">
+    <p class="docket-section-label">Open Items</p>
+
+    <div class="docket-item" data-docket="15-26">
+      <div class="docket-item-header" onclick="toggleDocket(this)">
+        <span class="petition-num">#15-26</span>
+        <span class="docket-address">355 Walnut St.</span>
+        <span class="docket-desc">FAR and setback relief</span>
+        <span class="status-badge status-open">Open</span>
+        <span class="docket-chevron">&#9662;</span>
+      </div>
+      <div class="docket-detail">
+        <p class="docket-detail-label">Meeting History</p>
+        <div class="timeline">
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-27')">
+            <span class="timeline-date">Jan 27, 2026</span>
+            <span class="timeline-meeting-type type-committee">Committee</span>
+            <div class="timeline-action">Public hearing — FAR and setback relief</div>
+          </div>
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-20')">
+            <span class="timeline-date">Jan 20, 2026</span>
+            <span class="timeline-meeting-type type-council">City Council</span>
+            <div class="timeline-action">Reported from committee</div>
+          </div>
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-06')">
+            <span class="timeline-date">Jan 6, 2026</span>
+            <span class="timeline-meeting-type type-committee">Committee</span>
+            <div class="timeline-action">Held at petitioner's request</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="docket-item" data-docket="16-26">
+      <div class="docket-item-header" onclick="toggleDocket(this)">
+        <span class="petition-num">#16-26</span>
+        <span class="docket-address">89 Redwood Rd.</span>
+        <span class="docket-desc">Special permit</span>
+        <span class="status-badge status-open">Open</span>
+        <span class="docket-chevron">&#9662;</span>
+      </div>
+      <div class="docket-detail">
+        <p class="docket-detail-label">Meeting History</p>
+        <div class="timeline">
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-06')">
+            <span class="timeline-date">Jan 6, 2026</span>
+            <span class="timeline-meeting-type type-committee">Committee</span>
+            <div class="timeline-action">Held</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="docket-item" data-docket="58-26">
+      <div class="docket-item-header" onclick="toggleDocket(this)">
+        <span class="petition-num">#58-26</span>
+        <span class="docket-address">1135 Walnut St.</span>
+        <span class="docket-desc">Parking waiver — withdrawal requested</span>
+        <span class="status-badge status-open">Open</span>
+        <span class="docket-chevron">&#9662;</span>
+      </div>
+      <div class="docket-detail">
+        <p class="docket-detail-label">Meeting History</p>
+        <div class="timeline">
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-27')">
+            <span class="timeline-date">Jan 27, 2026</span>
+            <span class="timeline-meeting-type type-committee">Committee</span>
+            <div class="timeline-action">Public hearing (withdrawal requested)</div>
+          </div>
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-20')">
+            <span class="timeline-date">Jan 20, 2026</span>
+            <span class="timeline-meeting-type type-council">City Council</span>
+            <div class="timeline-action">Referred with public hearing set for 1/27</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="docket-section-label">Closed Items</p>
+
+    <div class="docket-item" data-docket="13-26">
+      <div class="docket-item-header" onclick="toggleDocket(this)">
+        <span class="petition-num">#13-26</span>
+        <span class="docket-address">14 Elliot St.</span>
+        <span class="docket-desc">Special permit</span>
+        <span class="status-badge status-closed">Passed 24-0</span>
+        <span class="docket-chevron">&#9662;</span>
+      </div>
+      <div class="docket-detail">
+        <p class="docket-detail-label">Meeting History</p>
+        <div class="timeline">
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-20')">
+            <span class="timeline-date">Jan 20, 2026</span>
+            <span class="timeline-meeting-type type-council">City Council</span>
+            <div class="timeline-action">Passed full council 24-0 with conditions</div>
+          </div>
+          <div class="timeline-entry" onclick="navigateToMeeting('2026-01-06')">
+            <span class="timeline-date">Jan 6, 2026</span>
+            <span class="timeline-meeting-type type-committee">Committee</span>
+            <div class="timeline-action">Passed committee 8-0 with conditions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMBERS -->
+  <div class="section" id="members">
+    <div class="members-grid">
+      <div class="member-card chair">
+        <div class="member-role role-chair">Chair</div>
+        <div class="member-name">Andrea Kelley</div>
+        <div class="member-ward">Ward 3</div>
+      </div>
+      <div class="member-card vice-chair">
+        <div class="member-role role-vice">Vice-Chair</div>
+        <div class="member-name">Alison Leary</div>
+        <div class="member-ward">Ward 1</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Tarik Lucas</div>
+        <div class="member-ward">Ward 2</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Randy Block</div>
+        <div class="member-ward">Ward 4</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Julie Irish</div>
+        <div class="member-ward">Ward 5</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Sean Roche</div>
+        <div class="member-ward">Ward 6</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Brian Golden</div>
+        <div class="member-ward">Ward 7</div>
+      </div>
+      <div class="member-card">
+        <div class="member-role role-member">Member</div>
+        <div class="member-name">Stephen Farrell</div>
+        <div class="member-ward">Ward 8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="section" id="purpose">
+    <div class="purpose-card">
+      <h3>Committee Jurisdiction</h3>
+      <p>The Land Use Committee reviews Special Permit and Site Plan Approval petitions; utility petitions; zone change petitions; sign permits; lodging and dormitory licenses; automobile dealer licensing; towed vehicle storage permits; and Community Preservation housing proposals.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-contact">
+    <strong>Sean Roche, Councilor-at-Large</strong>
+    <p><a href="mailto:sean@seanroche.org">sean@seanroche.org</a></p>
+    <p>617-454-4422</p>
+    <p>42 Daniel Street, Newton, MA 02459</p>
+  </div>
+</footer>
+
+<script>
+  // ---- Tab switching ----
+  function switchTab(sectionId) {
+    document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelector(`.section-tab[data-section="${sectionId}"]`).classList.add('active');
+    document.getElementById(sectionId).classList.add('active');
+  }
+
+  document.querySelectorAll('.section-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.section));
+  });
+
+  // ---- Toggle docket expand/collapse ----
+  function toggleDocket(header) {
+    const item = header.closest('.docket-item');
+    item.classList.toggle('expanded');
+  }
+
+  // ---- Navigate: Meeting item -> Docket ----
+  function navigateToDocket(petitionId) {
+    switchTab('docket');
+
+    const docketItem = document.querySelector(`.docket-item[data-docket="${petitionId}"]`);
+    if (!docketItem) return;
+
+    // Expand it
+    docketItem.classList.add('expanded');
+
+    // Scroll to it and flash highlight
+    setTimeout(() => {
+      docketItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      docketItem.classList.add('highlight');
+      setTimeout(() => docketItem.classList.remove('highlight'), 1000);
+    }, 100);
+  }
+
+  // ---- Navigate: Docket timeline entry -> Meeting ----
+  function navigateToMeeting(meetingDate) {
+    switchTab('meetings');
+
+    const meetingCard = document.querySelector(`.meeting-card[data-meeting="${meetingDate}"]`);
+    if (!meetingCard) return;
+
+    setTimeout(() => {
+      meetingCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      meetingCard.classList.add('highlight');
+      setTimeout(() => meetingCard.classList.remove('highlight'), 1000);
+    }, 100);
+  }
+</script>
+
+</body>
+</html>
